@@ -11,6 +11,8 @@ from rest_framework import viewsets
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
+from Post.serializers import PostSerializer
+from Post.models import Post
 
 
 class RegisterUser(APIView):
@@ -81,3 +83,12 @@ class UnFollowView(generics.DestroyAPIView):
             follow.delete()
             return Response({"detail":"Unfollowed successfully"},status=status.HTTP_204_NO_CONTENT)
         return Response({"detail": "You are not following this user."}, status=status.HTTP_400_BAD_REQUEST)
+    
+
+class UserFeedView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        followed_user = Follow.objects.filter(follow=self.request.user).values_list("following", flat=True)
+        return Post.objects.filter(post_user__in = followed_user).order_by('-created_at')

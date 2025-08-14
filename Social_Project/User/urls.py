@@ -10,5 +10,6 @@ urlpatterns = [
     path('login/', views.Login.as_view(), name="login"),
     path('', include(router.urls)),
     path('follow/',views.FollowView.as_view(), name="follow-user"),
-    path('unfollow/<int:user_id>/', views.UnFollowView.as_view(), name="unfollow-user")
+    path('unfollow/<int:user_id>/', views.UnFollowView.as_view(), name="unfollow-user"),
+    path('userfeed/', views.UserFeedView.as_view(),name="user-feed")
 ]
