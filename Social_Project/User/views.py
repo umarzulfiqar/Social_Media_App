@@ -6,13 +6,14 @@ from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import status
 from django.contrib.auth import authenticate
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework import viewsets
 from rest_framework.throttling import UserRateThrottle,AnonRateThrottle
 from rest_framework import generics
 from rest_framework.exceptions import ValidationError
 from Post.serializers import PostSerializer
 from Post.models import Post
+from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterUser(APIView):
@@ -38,7 +39,7 @@ class RegisterUser(APIView):
     
 class Login(APIView):
     throttle_classes = [UserRateThrottle,AnonRateThrottle]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     def post(self,request):
         username = request.data.get("username")
         password = request.data.get("password")
@@ -46,7 +47,13 @@ class Login(APIView):
         user = authenticate(username=username , password=password)
 
         if user is not None:
-            return Response({"message":"You logeg in sucessfully"}, status=status.HTTP_200_OK)
+            refresh = RefreshToken.for_user(user)
+            return Response({
+                "message": "You logged in successfully",
+                "refresh": str(refresh),
+                "access": str(refresh.access_token)
+            }, status=status.HTTP_200_OK)
+
         
         return Response({"message":"Invalid credentials"},status=status.HTTP_401_UNAUTHORIZED)
     
