@@ -19,3 +19,10 @@ class Post(models.Model):
             max_size = (800, 800)
             img.thumbnail(max_size)
             img.save(img_path)
+
+class Comment(models.Model):
+    id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    content = models.TextField(null=False)
+    created_at = models.DateTimeField(auto_now_add = True)

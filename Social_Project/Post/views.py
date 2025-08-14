@@ -1,12 +1,12 @@
 from rest_framework.views import APIView
 from rest_framework import permissions
-from .models import Post
+from .models import Post,Comment
 from rest_framework import status
-from .serializers import PostSerializer
+from .serializers import PostSerializer,CommentSerializer
 from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly
 from django.shortcuts import get_object_or_404
-
+from rest_framework import generics
 
 
 class PostListCreate(APIView):
@@ -49,3 +49,23 @@ class PostDetail(APIView):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+class CommentView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get_queryset(self):
+        post_id = self.kwargs['id']
+        return Comment.objects.filter(post_id=post_id).order_by('-created_at')
+    
+    def perform_create(self, serializer):
+        post_id = self.kwargs['id']
+        serializer.save(user= self.request.user, post_id = post_id)
+
+class CommentDeleteView(generics.DestroyAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Comment.objects.filter(user = self.request.user)

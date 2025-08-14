@@ -21,6 +21,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('User.urls')),
+    path('', include('Post.urls')),
     path('post/',include('Post.urls')),
     path('api/token/',TokenObtainPairView.as_view(),name='Gentare-Token'),
     path('api/token/refresh/',TokenRefreshView.as_view(),name='Refresh-Token'),
