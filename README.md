@@ -10,16 +10,16 @@ Use JWT Authencation when user loged in.
 -> User registration (sign up) <br>
 -> User login (token obtain) <br>
 -> User profile retrieval and update <br>
-<h3>Follow Unfollow User</h3>
+<h3>Follow Unfollow User:</h3>
 User can follow and unfollow other user and can not follow him/her self
-<h3>Follow Model</h3>
+<h3>Follow Model:</h3>
 id (uuid) <br>
 follower (ForeginKey with user) <br>
 following (ForeginKey with user) <br>
 created_at (DateandTimestamp) <br>
 
 <h2>Step 2 Explaination:</h2>
-<h4>Post Model Design</h4>
+<h3>Post Model Design:</h3>
 Post's content (text) <br>
 Images upload (Image Field) <br>
 Post author(Foregin  key) <br>
@@ -30,7 +30,7 @@ User can see only followed user's post <br>
 Uses "Follow" model and check following of curret loged in user in the following column <br>
 
 <h2>Step 4 Explaination:</h2>
-<h4>Comments Model Design</h4>
+<h3>Comments Model Design:</h3>
 id (uuid) <br>
 post (ForeignKey with Post) <br>
 user (ForeignKey User) <br>
