@@ -3,7 +3,7 @@ Step 1: User Management <br>
 Step 2: Posts <br>
 Step 3: News Feed <br>
 Step 4: Comments <br>
-Step 4: Like or Unlike Post <br>
+Step 5: Like or Unlike Post <br>
 <hr>
 <h2 >Step 1 Explaination:</h2>
 I used Django default with some additional fields like (bio,avatar) and make OnetoOnefield with defult user.
