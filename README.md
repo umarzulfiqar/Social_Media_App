@@ -12,7 +12,7 @@ Use JWT Authencation when user loged in.
 -> User profile retrieval and update <br>
 <h3>Follow Unfollow User</h3>
 User can follow and unfollow other user and can not follow him/her self
-<h2>Follow Model</h2>
+<h3>Follow Model</h3>
 id (uuid) <br>
 follower (ForeginKey with user) <br>
 following (ForeginKey with user) <br>
