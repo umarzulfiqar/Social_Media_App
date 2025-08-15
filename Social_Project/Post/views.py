@@ -1,8 +1,8 @@
 from rest_framework.views import APIView
 from rest_framework import permissions
-from .models import Post,Comment
+from .models import Post,Comment,Like
 from rest_framework import status
-from .serializers import PostSerializer,CommentSerializer
+from .serializers import PostSerializer,CommentSerializer,LikeSerialier
 from rest_framework.response import Response
 from .permissions import IsOwnerOrReadOnly
 from django.shortcuts import get_object_or_404
@@ -69,3 +69,17 @@ class CommentDeleteView(generics.DestroyAPIView):
 
     def get_queryset(self):
         return Comment.objects.filter(user = self.request.user)
+    
+class LikeView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self,request,pk):
+        post = get_object_or_404(Post,id=pk)
+        like = Like.objects.filter(post=post, user = request.user)    #unlike
+        if like.exists():
+            like.delete()
+            return Response({"message":"Unliked Successfully","Total likes":post.likes.count()},status=status.HTTP_200_OK)
+        else:                                                         #like
+            Like.objects.create(post=post, user = request.user)
+            return Response({"message":"Liked Successfully","Total likes":post.likes.count()},status=status.HTTP_200_OK)
+        
