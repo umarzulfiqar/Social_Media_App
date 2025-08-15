@@ -40,7 +40,7 @@ created_at (DateTimeField) <br>
 Only that user can delete comment which is current loged in nd owner of comment. <br>
 Anyone can add comment of anyone's post <br>
 <hr>
-<h2>Step 4 Explaination:</h2>
+<h2>Step 5 Explaination:</h2>
 I use post and logedin user as a ForeginKey in the model <br>
 If the use already like the post it will toggle the change (delete to unlike)<br>
 I use simple post method of APIView to get data from user <br>
