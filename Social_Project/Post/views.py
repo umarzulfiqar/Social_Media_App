@@ -32,7 +32,7 @@ class PostDetail(APIView):
         self.check_object_permissions(self.request, post)
         return post
     
-    def get(self, pk):
+    def get(self,request, pk):
         post = self.get_object(pk)
         serializer = PostSerializer(post)
         return Response(serializer.data)
@@ -45,7 +45,7 @@ class PostDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def delete(self,pk):
+    def delete(self,request, pk):
         post = self.get_object(pk)
         post.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
