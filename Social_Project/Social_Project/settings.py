@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'rest_framework',
     'User',
     'Post',
@@ -73,7 +74,18 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Social_Project.wsgi.application'
+# WSGI_APPLICATION = 'Social_Project.wsgi.application'
+ASGI_APPLICATION = 'Social_Project.asgi.application'
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+    },
+}
 
 
 # Database
